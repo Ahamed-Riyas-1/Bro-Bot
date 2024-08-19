@@ -10,4 +10,4 @@ jobs:
     steps:
     - name: Send POST request to Vercel function
       run: |
-        curl -X POST https:bro-n32ajtoi5-ahamed-riyas-projects.vercel.app
+        curl -X POST https:bro-bot-one.vercel.app
