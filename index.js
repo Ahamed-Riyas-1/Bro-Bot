@@ -36,9 +36,8 @@ module.exports = async (req, res) => {
     try {
         const gatherable_rewards = await gatherableRewards();
         console.log(`Rewards available: ${gatherable_rewards}`);
-        console.log('Gte : ' , gatherable_rewards.gte(Decimal("0.01")));
 
-        // if (gatherable_rewards.gte(Decimal("0.01"))) {
+        if (gatherable_rewards.gte(Decimal("0.01"))) {
             console.log("Auto pumping");
             const msg = await bot.sendMessage(groupId, 'Auto-pumping $BRO in progress');
             const requestKey = await gather_rewards();
@@ -55,10 +54,10 @@ module.exports = async (req, res) => {
             const priceMessage = `New price: ${price.toString()} KDA / $BRO`;
             const priceMsg = await bot.sendMessage(groupId, priceMessage);
             setTimeout(() => priceMsg.delete({ revoke: true }), 3600_000);
-        // } else {
-        //     console.log("Not enough rewards to gather => Cancel");
-        //     await bot.sendMessage(groupId, 'Deployed in production');
-        // }
+        } else {
+            console.log("Not enough rewards to gather => Cancel");
+            // await bot.sendMessage(groupId, 'Deployed in production');
+        }
 
         res.status(200).send('Process completed');
     } catch (error) {
