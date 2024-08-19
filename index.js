@@ -36,6 +36,7 @@ module.exports = async (req, res) => {
     try {
         const gatherable_rewards = await gatherableRewards();
         console.log(`Rewards available: ${gatherable_rewards}`);
+        console.log('Gte : ' , gatherable_rewards.gte(Decimal("0.01")));
 
         if (gatherable_rewards.gte(Decimal("0.01"))) {
             console.log("Auto pumping");
