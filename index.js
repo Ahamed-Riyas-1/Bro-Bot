@@ -57,7 +57,7 @@ async function do_auto_pump() {
             setTimeout(() => priceMsg.delete({ revoke: true }), 3600_000);
         } else {
             console.log("Not enough rewards to gather => Cancel");
-            // await bot.sendMessage(groupId, 'Nothing happened');
+            await bot.sendMessage(groupId, 'Deployed in production');
         }
     } catch (error) {
         console.error('Error in do_auto_pump:', error);
