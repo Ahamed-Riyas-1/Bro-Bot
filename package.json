@@ -1,6 +1,10 @@
 {
   "name": "bro-bot",
   "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "@kadena/client": "^1.13.0",
     "decimal.js": "^10.4.3",
