@@ -25,14 +25,12 @@ const bot_signer = createSignWithKeypair({ publicKey: BRO_PUBKEY, secretKey: BRO
 
 const getClient = (chain = defaultChain) => createClient(`${apiHost}/chainweb/0.0/${network}/chain/${chain}/pact`);
 
-function sendMessageToGroup() {
-    do_auto_pump().catch(console.error);
-}
+// Export a handler function for Vercel
+module.exports = async (req, res) => {
+    if (req.method !== 'POST') {
+        return res.status(405).send('Method Not Allowed');
+    }
 
-const interval = 5000;
-setInterval(sendMessageToGroup, interval);
-
-async function do_auto_pump() {
     console.log("====> AUTO PUMPING");
     try {
         const gatherable_rewards = await gatherableRewards();
@@ -59,8 +57,11 @@ async function do_auto_pump() {
             console.log("Not enough rewards to gather => Cancel");
             await bot.sendMessage(groupId, 'Deployed in production');
         }
+
+        res.status(200).send('Process completed');
     } catch (error) {
         console.error('Error in do_auto_pump:', error);
+        res.status(500).send('Internal Server Error');
     }
 }
 
@@ -144,5 +145,3 @@ const pactCalls = async (code, chain) => {
         throw error;
     }
 };
-
-
