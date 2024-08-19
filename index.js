@@ -69,6 +69,7 @@ module.exports = async (req, res) => {
 
 const gatherableRewards = async () => {
     const code = `(${bro_treasury}.liquidity-to-remove)`;
+    console.log('Code : ' , code)
     const response = await pactCalls(code, defaultChain);
     return parsePactResponseThrow(response);
 };
@@ -122,6 +123,7 @@ const getBroPrice = async () => {
 };
 
 const parsePactResponseThrow = (response) => {
+    console.log('Response : ' , response);
     if (response?.result?.status === 'success') {
         return Decimal(response.result.data);
     }
