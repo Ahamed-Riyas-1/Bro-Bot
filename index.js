@@ -27,7 +27,7 @@ const getClient = (chain = defaultChain) => createClient(`${apiHost}/chainweb/0.
 
 // Export a handler function for Vercel
 module.exports = async (req, res) => {
-    console.log(req);
+    console.log(req.method);
     if (req.method !== 'POST') {
         return res.status(405).send('Method Not Allowed');
     }
