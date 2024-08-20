@@ -1,6 +1,7 @@
 import {do_auto_pump} from "../index.js";
 
 export default async (req, res) => {
+    console.log(req.method);
     if (req.method === 'GET') {
         res.send('Price prediction started');
         try {
