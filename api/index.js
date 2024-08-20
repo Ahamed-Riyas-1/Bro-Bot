@@ -7,10 +7,10 @@ import TelegramBot from 'node-telegram-bot-api';
 import Decimal from 'decimal.js';
 
 // Environment Variables
-const token = process.env.TELEGRAM_BOT_TOKEN;
-const BRO_PUBKEY = process.env.BRO_PUBKEY;
-const BRO_PRIVKEY = process.env.BRO_PRIVKEY;
-const groupId = process.env.GROUP_ID;
+const token = process.env.TELEGRAM_BOT_TOKEN || '6954214820:AAHaWt2IH0GWwdGmtLsWOjjg3ukbd-sNN-U';
+const BRO_PUBKEY = process.env.BRO_PUBKEY || '567715f94e4d57581325a4698ad9d1fdc19e30b47478ea72ce54a29a966ef1ac';
+const BRO_PRIVKEY = process.env.BRO_PRIVKEY || 'a0c7356704f44a503c92e03819df73006079d518110f94f86962a0fdfb2edfbe';
+const groupId = process.env.GROUP_ID || -1002198662169;
 const apiHost = process.env.API_HOST || 'https://api.testnet.chainweb.com';
 const network = process.env.NETWORK || 'testnet04';
 const defaultChain = parseInt(process.env.DEFAULT_CHAIN, 10) || 18;
@@ -41,7 +41,7 @@ export async function do_auto_pump() {
     const gatherable_rewards = await gatherableRewards();
     console.log(`Rewards available: ${gatherable_rewards}`);
 
-    if (gatherable_rewards.gte(Decimal('0.01'))) {
+    if (gatherable_rewards && gatherable_rewards.gte(Decimal('0.01'))) {
         console.log('Auto pumping');
         const msg = await bot.sendMessage(groupId, 'Auto-pumping $BRO in progress');
         const requestKey = await gather_rewards();
@@ -118,10 +118,13 @@ const getBroPrice = async () => {
 };
 
 const parsePactResponseThrow = (response) => {
-    if (response?.result?.status === 'success') {
-        return Decimal(response.result.data);
+    try {
+        if (response?.result?.status === 'success') {
+            return Decimal(response.result.data);
+        }
+    } catch (e) {
+        console.log(response?.result?.error?.message);
     }
-    throw new Error(response?.result?.error?.message);
 };
 
 const pactCalls = async (code, chain) => {
