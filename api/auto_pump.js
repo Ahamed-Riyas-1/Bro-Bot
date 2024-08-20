@@ -1,18 +1,15 @@
-import express from "express";
 import {do_auto_pump} from "../index.js";
 
-const app = express();
-const port = process.env.PORT || 3000;
-
-app.get('/auto_pump', async (req, res) => {
-    res.send('Price prediction started');
-    try {
-        await do_auto_pump(); // Ensure async function is awaited
-    } catch (error) {
-        console.error('Error in do_auto_pump:', error);
+export default async (req, res) => {
+    if (req.method === 'GET') {
+        res.send('Price prediction started');
+        try {
+            await do_auto_pump(); // Ensure do_auto_pump is defined and implemented
+        } catch (error) {
+            console.error('Error in do_auto_pump:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    } else {
+        res.status(405).send('Method Not Allowed');
     }
-});
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+};
