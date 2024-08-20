@@ -27,20 +27,8 @@ const bot_signer = createSignWithKeypair({ publicKey: BRO_PUBKEY, secretKey: BRO
 
 const getClient = (chain = defaultChain) => createClient(`${apiHost}/chainweb/0.0/${network}/chain/${chain}/pact`);
 
-const app = express();
-const port = process.env.PORT || 3000;
-
-app.get('/auto_pump', (req, res) => {
-    res.send('Price prediction started');
-    do_auto_pump()
-});
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
-
 // Define your auto-pump function
-async function do_auto_pump() {
+export async function do_auto_pump() {
     const gatherable_rewards = await gatherableRewards();
     console.log(`Rewards available: ${gatherable_rewards}`);
 
