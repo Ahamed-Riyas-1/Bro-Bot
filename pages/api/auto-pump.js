@@ -1,11 +1,22 @@
-import {do_auto_pump} from "../../index";
+// import handler from './pages/api/auto-pump';
 
-export default async function handler(req, res) {
+// Simulate an HTTP request to your API handler
+import handler from "../../index.js";
+
+async function triggerAutoPump() {
+    const req = {}; // Mock request object
+    const res = {
+        status: (statusCode) => ({
+            json: (responseBody) => console.log('Response:', responseBody),
+        }),
+    }; // Mock response object
+
     try {
-        await do_auto_pump();
-        res.status(200).json({ message: 'Auto-pump executed successfully' });
+        await handler(req, res);
     } catch (error) {
-        console.error('Error during auto-pump:', error);
-        res.status(500).json({ error: 'Auto-pump failed' });
+        console.error('Error executing handler:', error);
     }
 }
+
+// Call the function to trigger the auto-pump
+triggerAutoPump();
