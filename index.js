@@ -1,3 +1,5 @@
+import express from 'express';
+
 // pages/api/auto-pump.js
 import 'dotenv/config';
 import { Pact, isSignedTransaction, createSignWithKeypair, createClient } from '@kadena/client';
@@ -24,6 +26,18 @@ const bot = new TelegramBot(token, { polling: true });
 const bot_signer = createSignWithKeypair({ publicKey: BRO_PUBKEY, secretKey: BRO_PRIVKEY });
 
 const getClient = (chain = defaultChain) => createClient(`${apiHost}/chainweb/0.0/${network}/chain/${chain}/pact`);
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.get('/auto_pump', (req, res) => {
+    res.send('Price prediction started');
+    do_auto_pump()
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
 
 // Define your auto-pump function
 async function do_auto_pump() {
@@ -132,14 +146,3 @@ const pactCalls = async (code, chain) => {
         throw error;
     }
 };
-
-// API Route handler
-export default async function handler(req, res) {
-    try {
-        await do_auto_pump();
-        res.status(200).json({ message: 'Auto-pump executed successfully' });
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: error.message });
-    }
-}

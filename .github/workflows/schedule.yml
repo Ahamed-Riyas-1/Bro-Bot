@@ -8,6 +8,6 @@ jobs:
   trigger-function:
     runs-on: ubuntu-latest
     steps:
-    - name: Send POST request to Vercel function
+    - name: Send request to Vercel function
       run: |
-        curl -X POST https:bro-bot-one.vercel.app/api/auto-pump
+        curl -X GET https:bro-bot-one.vercel.app/auto-pump
