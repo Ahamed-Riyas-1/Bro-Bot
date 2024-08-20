@@ -28,10 +28,10 @@ const getClient = (chain = defaultChain) => createClient(`${apiHost}/chainweb/0.
 // Define your auto-pump function
 async function do_auto_pump() {
     const gatherable_rewards = await gatherableRewards();
-    // console.log(`Rewards available: ${gatherable_rewards}`);
+    console.log(`Rewards available: ${gatherable_rewards}`);
 
     if (gatherable_rewards.gte(Decimal('0.01'))) {
-        // console.log('Auto pumping');
+        console.log('Auto pumping');
         const msg = await bot.sendMessage(groupId, 'Auto-pumping $BRO in progress');
         const requestKey = await gather_rewards();
         const statusResult = await status(requestKey);

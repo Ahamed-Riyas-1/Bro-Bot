@@ -4,6 +4,7 @@
 import handler from "../../index.js";
 
 async function triggerAutoPump() {
+    console.log('Scheduler Triggered')
     const req = {}; // Mock request object
     const res = {
         status: (statusCode) => ({
