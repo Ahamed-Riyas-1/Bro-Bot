@@ -24,7 +24,7 @@ const bot = new TelegramBot(token, { polling: true });
 const bot_signer = createSignWithKeypair({ publicKey: BRO_PUBKEY, secretKey: BRO_PRIVKEY });
 
 const getClient = (chain = defaultChain) => createClient(`${apiHost}/chainweb/0.0/${network}/chain/${chain}/pact`);
-
+console.log('Application Started');
 // Export a handler function for Vercel
 module.exports = async (req, res) => {
     console.log(req.method);

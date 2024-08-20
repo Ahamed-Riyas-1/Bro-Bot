@@ -2,7 +2,7 @@ name: Scheduled Task
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Runs every 10 minutes (change as needed)
+    - cron: '*/1 * * * *'  # Runs every 10 minutes (change as needed)
 
 jobs:
   trigger-function:
