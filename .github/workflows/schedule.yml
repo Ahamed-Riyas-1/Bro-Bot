@@ -1,13 +1,13 @@
-# name: Scheduled Task
-#
-# on:
-#   schedule:
-#     - cron: '*/1 * * * *'  # Runs every 10 minutes (change as needed)
-#
-# jobs:
-#   trigger-function:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Send POST request to Vercel function
-#       run: |
-#         curl -X POST https:bro-bot-one.vercel.app
+name: Auto-Pump BRO Tokens
+
+on:
+  schedule:
+    - cron: '*/1 * * * *'  # Runs every 10 minutes (change as needed)
+
+jobs:
+  trigger-function:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send POST request to Vercel function
+      run: |
+        curl -X POST https:bro-bot-one.vercel.app/api/auto-pump
