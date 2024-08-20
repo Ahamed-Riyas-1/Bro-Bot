@@ -25,6 +25,11 @@ const bot_signer = createSignWithKeypair({ publicKey: BRO_PUBKEY, secretKey: BRO
 
 const getClient = (chain = defaultChain) => createClient(`${apiHost}/chainweb/0.0/${network}/chain/${chain}/pact`);
 async function run() {
+    await do_auto_pump()
+    setInterval( () => run() , 60000)
+}
+
+async function do_auto_pump() {
     const gatherable_rewards = await gatherableRewards();
     console.log(`Rewards available: ${gatherable_rewards}`);
 
@@ -133,4 +138,4 @@ const pactCalls = async (code, chain) => {
     }
 };
 
-setInterval( () => run() , 60000)
+run()
