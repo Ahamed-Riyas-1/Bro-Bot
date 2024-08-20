@@ -27,6 +27,15 @@ const bot_signer = createSignWithKeypair({ publicKey: BRO_PUBKEY, secretKey: BRO
 
 const getClient = (chain = defaultChain) => createClient(`${apiHost}/chainweb/0.0/${network}/chain/${chain}/pact`);
 
+const app = express();
+
+app.get("/", (req, res) => {
+    res.send("Express on Vercel");
+    do_auto_pump()
+});
+
+app.listen(3000, () => console.log("Server ready on port 3000."));
+
 // Define your auto-pump function
 export async function do_auto_pump() {
     const gatherable_rewards = await gatherableRewards();

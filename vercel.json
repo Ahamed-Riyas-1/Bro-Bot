@@ -1,15 +1,9 @@
 {
   "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "api/auto-pump.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/auto_pump",
-      "dest": "/api/auto-pump"
+      "source": "/(.*)",
+      "destination": "/api"
     }
   ]
 }
