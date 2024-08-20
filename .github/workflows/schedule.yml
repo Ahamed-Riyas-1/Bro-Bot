@@ -10,4 +10,4 @@ jobs:
     steps:
     - name: Send request to Vercel function
       run: |
-        curl -X GET https:bro-bot-alpha.vercel.app/auto-pump
+        curl -X GET https:bro-bot-blond.vercel.app/auto-pump
