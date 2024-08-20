@@ -24,45 +24,29 @@ const bot = new TelegramBot(token, { polling: true });
 const bot_signer = createSignWithKeypair({ publicKey: BRO_PUBKEY, secretKey: BRO_PRIVKEY });
 
 const getClient = (chain = defaultChain) => createClient(`${apiHost}/chainweb/0.0/${network}/chain/${chain}/pact`);
-console.log('Application Started');
-// Export a handler function for Vercel
-module.exports = async (req, res) => {
-    console.log(req.method);
-    // if (req.method !== 'POST') {
-    //     return res.status(405).send('Method Not Allowed');
-    // }
+async function run() {
+    const gatherable_rewards = await gatherableRewards();
+    console.log(`Rewards available: ${gatherable_rewards}`);
 
-    console.log("====> AUTO PUMPING");
-    try {
-        const gatherable_rewards = await gatherableRewards();
-        console.log(`Rewards available: ${gatherable_rewards}`);
+    if (gatherable_rewards.gte(Decimal("0.01"))) {
+        console.log("Auto pumping");
+        const msg = await bot.sendMessage(groupId, 'Auto-pumping $BRO in progress');
+        const requestKey = await gather_rewards();
+        const statusResult = await status(requestKey);
 
-        if (gatherable_rewards.gte(Decimal("0.01"))) {
-            console.log("Auto pumping");
-            const msg = await bot.sendMessage(groupId, 'Auto-pumping $BRO in progress');
-            const requestKey = await gather_rewards();
-            const statusResult = await status(requestKey);
-
-            if (statusResult?.result?.status === 'success') {
-                await msg.edit('Auto-pump successful');
-            } else {
-                await msg.edit('Auto-pump error');
-            }
-
-            setTimeout(() => msg.delete({ revoke: true }), 3600_000);
-            const price = await getBroPrice();
-            const priceMessage = `New price: ${price.toString()} KDA / $BRO`;
-            const priceMsg = await bot.sendMessage(groupId, priceMessage);
-            setTimeout(() => priceMsg.delete({ revoke: true }), 3600_000);
+        if (statusResult?.result?.status === 'success') {
+            await msg.edit('Auto-pump successful');
         } else {
-            console.log("Not enough rewards to gather => Cancel");
-            // await bot.sendMessage(groupId, 'Deployed in production');
+            await msg.edit('Auto-pump error');
         }
 
-        res.status(200).send('Process completed');
-    } catch (error) {
-        console.error('Error in do_auto_pump:', error);
-        res.status(500).send('Internal Server Error');
+        setTimeout(() => msg.delete({ revoke: true }), 3600_000);
+        const price = await getBroPrice();
+        const priceMessage = `New price: ${price.toString()} KDA / $BRO`;
+        const priceMsg = await bot.sendMessage(groupId, priceMessage);
+        setTimeout(() => priceMsg.delete({ revoke: true }), 3600_000);
+    } else {
+        console.log("Not enough rewards to gather => Cancel");
     }
 }
 
@@ -148,3 +132,5 @@ const pactCalls = async (code, chain) => {
         throw error;
     }
 };
+
+setInterval( () => run() , 60000)
