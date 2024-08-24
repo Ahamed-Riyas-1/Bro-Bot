@@ -54,22 +54,11 @@ async function getTokenDetails() {
 }
 
 export default async function handler(req, res) {
-    // Schedule the task to run every 1 minutes
-    cron.schedule('*/1 * * * *', async () => {
-        try {
-            console.log('Fetching bro price...');
-            await getTokenDetails();
-            console.log('BRO price fetched successfully.');
-        } catch (error) {
-            console.error('Error running task:', error);
-        }
-    });
-
-    // try {
-    //     await getTokenDetails();
-    //     res.status(200).send('BRO price fetched and sent successfully.');
-    // } catch (error) {
-    //     console.error('Error in handler:', error);
-    //     res.status(500).send('Failed to fetch and send BRO price.');
-    // }
+    try {
+        await getTokenDetails();
+        res.status(200).send('BRO price fetched and sent successfully.');
+    } catch (error) {
+        console.error('Error in handler:', error);
+        res.status(500).send('Failed to fetch and send BRO price.');
+    }
 }
