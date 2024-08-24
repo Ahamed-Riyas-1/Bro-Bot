@@ -1,6 +1,10 @@
 import { config } from 'dotenv';
+import express from 'express';
 import TelegramBot from 'node-telegram-bot-api';
 import Pact from 'pact-lang-api';
+
+const app = express();
+const port = process.env.PORT || 3000;
 
 // Load environment variables
 config();
@@ -53,12 +57,30 @@ async function getTokenDetails() {
     }
 }
 
-export default async function handler(req, res) {
+// Schedule the task to run every 1 minutes
+// cron.schedule('*/1 * * * *', async () => {
+//     try {
+//         console.log('Fetching bro price...');
+//         await getTokenDetails();
+//         console.log('BRO price fetched successfully.');
+//     } catch (error) {
+//         console.error('Error running task:', error);
+//     }
+// });
+
+app.get('/fetch-bro-price', async (req, res) => {
     try {
-        await getTokenDetails();
-        res.status(200).send('BRO price fetched and sent successfully.');
+        console.log('Fetching BRO price...');
+        const broPrice = await getTokenDetails();
+        console.log('BRO price fetched successfully.');
+        res.status(200).json({ message: `BRO Price: ${broPrice} KDA` });
     } catch (error) {
-        console.error('Error in handler:', error);
-        res.status(500).send('Failed to fetch and send BRO price.');
+        console.error('Error running task:', error);
+        res.status(500).json({ error: 'Failed to fetch BRO price' });
     }
-}
+});
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
