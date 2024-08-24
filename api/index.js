@@ -68,19 +68,29 @@ async function getTokenDetails() {
 //     }
 // });
 
-app.get('/fetch-bro-price', async (req, res) => {
-    try {
-        console.log('Fetching BRO price...');
-        const broPrice = await getTokenDetails();
-        console.log('BRO price fetched successfully.');
-        res.status(200).json({ message: `BRO Price: ${broPrice} KDA` });
-    } catch (error) {
-        console.error('Error running task:', error);
-        res.status(500).json({ error: 'Failed to fetch BRO price' });
-    }
-});
+// app.get('/fetch-bro-price', async (req, res) => {
+//     try {
+//         console.log('Fetching BRO price...');
+//         const broPrice = await getTokenDetails();
+//         console.log('BRO price fetched successfully.');
+//         res.status(200).json({ message: `BRO Price: ${broPrice} KDA` });
+//     } catch (error) {
+//         console.error('Error running task:', error);
+//         res.status(500).json({ error: 'Failed to fetch BRO price' });
+//     }
+// });
+//
+// // Start the server
+// app.listen(port, () => {
+//     console.log(`Server is running on port ${port}`);
+// });
 
-// Start the server
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+export default async function handler(req, res) {
+    try {
+        await getTokenDetails();
+        res.status(200).send('BRO price fetched and sent successfully.');
+    } catch (error) {
+        console.error('Error in handler:', error);
+        res.status(500).send('Failed to fetch and send BRO price.');
+    }
+}
