@@ -1,13 +1,13 @@
-name: Auto-Pump BRO Tokens
-
-on:
-  schedule:
-    - cron: '*/1 * * * *'  # Runs every 10 minutes (change as needed)
-
-jobs:
-  trigger-function:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Send request to Vercel function
-      run: |
-        curl -X GET https:bro-bot-eight.vercel.app/auto-pump
+# name: Auto-Pump BRO Tokens
+#
+# on:
+#   schedule:
+#     - cron: '*/1 * * * *'  # Runs every 10 minutes (change as needed)
+#
+# jobs:
+#   trigger-function:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Send request to Vercel function
+#       run: |
+#         curl -X GET https:bro-bot-eight.vercel.app/auto-pump
