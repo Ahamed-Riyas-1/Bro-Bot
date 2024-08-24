@@ -1,13 +1,13 @@
-name: BRO Price
-
-on:
-  schedule:
-    - cron: '*/1 * * * *'  # Runs every 1 minutes (change as needed)
-
-jobs:
-  trigger-function:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Send request to Vercel function
-      run: |
-        curl -X POST https:bro-bot-woad.vercel.app/index
+# name: BRO Price
+#
+# on:
+#   schedule:
+#     - cron: '*/1 * * * *'  # Runs every 1 minutes (change as needed)
+#
+# jobs:
+#   trigger-function:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Send request to Vercel function
+#       run: |
+#         curl -X POST https:bro-bot-woad.vercel.app/index
