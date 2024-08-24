@@ -20,7 +20,7 @@ const KEY_PAIR = {
 
 const creationTime = () => Math.round(new Date().getTime() / 1000);
 
-export async function handler(event, context) {
+export async function fetchBroPrice() {
     try {
         console.log('Fetching BRO price...');
         const cmd = {
@@ -55,5 +55,3 @@ export async function handler(event, context) {
         };
     }
 }
-
-handler();
