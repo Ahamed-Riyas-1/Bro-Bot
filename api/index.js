@@ -54,7 +54,6 @@ async function getTokenDetails() {
 }
 
 export default async function handler(req, res) {
-    console.log(req);
     try {
         await getTokenDetails();
         res.status(200).send('BRO price fetched and sent successfully.');
