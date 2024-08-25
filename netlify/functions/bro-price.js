@@ -49,18 +49,12 @@ async function getTokenDetails() {
     }
 }
 
-// exports.handler = async function(event, context) {
-//     await getTokenDetails();
-//     return {
-//         statusCode: 200,
-//         body: JSON.stringify({ message: 'BRO price fetched successfully.' }),
-//     };
-// };
-
-setInterval( async () => {
-    await getTokenDetails();
-    return {
-        statusCode: 200,
-        body: JSON.stringify({ message: 'BRO price fetched successfully.' }),
-    };
-} , 60 * 1000);
+exports.handler = async function(event, context) {
+    setInterval( async () => {
+        await getTokenDetails();
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ message: 'BRO price fetched successfully.' }),
+        };
+    } , 60 * 1000);
+};
