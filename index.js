@@ -51,9 +51,9 @@ async function getTokenDetails() {
     try {
         const result = await Pact.fetch.local(cmd, API_HOST);
         const broPrice = result.result?.data;
-        if (broPrice > 1800 || broPrice < 1700) {
+        // if (broPrice > 1800 || broPrice < 1700) {
             await bot.sendMessage(TELEGRAM_GROUP_ID, `Bro Price: ${broPrice} KDA`);
-        }
+        // }
         console.log('Token Details:', result);
     } catch (error) {
         console.error('Error fetching token details:', error);
