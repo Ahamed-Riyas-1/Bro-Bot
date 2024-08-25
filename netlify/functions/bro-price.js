@@ -50,11 +50,9 @@ async function getTokenDetails() {
 }
 
 exports.handler = async function(event, context) {
-    setInterval( async () => {
-        await getTokenDetails();
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: 'BRO price fetched successfully.' }),
-        };
-    } , 60 * 1000);
+    await getTokenDetails();
+    return {
+        statusCode: 200,
+        body: JSON.stringify({ message: 'BRO price fetched successfully.' }),
+    };
 };
