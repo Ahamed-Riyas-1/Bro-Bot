@@ -60,6 +60,9 @@ async function getTokenDetails() {
     }
 }
 
+
+await getTokenDetails();
+
 // // Schedule the task to run every 1 minutes
 // cron.schedule('*/1 * * * *', async () => {
 //     try {
@@ -81,19 +84,19 @@ async function getTokenDetails() {
 //     }
 // } , 5000)
 
-app.get('/', async (req, res) => {
-    try {
-        console.log('Fetching BRO price...');
-        const broPrice = await getTokenDetails();
-        console.log('BRO price fetched successfully.');
-        res.status(200).json({ message: `BRO Price: ${broPrice} KDA` });
-    } catch (error) {
-        console.error('Error running task:', error);
-        res.status(500).json({ error: 'Failed to fetch BRO price' });
-    }
-});
-
-// Start the server
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+// app.get('/', async (req, res) => {
+//     try {
+//         console.log('Fetching BRO price...');
+//         const broPrice = await getTokenDetails();
+//         console.log('BRO price fetched successfully.');
+//         res.status(200).json({ message: `BRO Price: ${broPrice} KDA` });
+//     } catch (error) {
+//         console.error('Error running task:', error);
+//         res.status(500).json({ error: 'Failed to fetch BRO price' });
+//     }
+// });
+//
+// // Start the server
+// app.listen(port, () => {
+//     console.log(`Server is running on port ${port}`);
+// });
