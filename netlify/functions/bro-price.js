@@ -1,5 +1,9 @@
 const TelegramBot = require('node-telegram-bot-api');
 const Pact = require('pact-lang-api');
+const config = require('dotenv');
+
+// Load environment variables
+config();
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_GROUP_ID = process.env.TELEGRAM_GROUP_ID;
