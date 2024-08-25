@@ -1,6 +1,9 @@
 import { config } from 'dotenv';
+import TelegramBot from 'node-telegram-bot-api';
 import Pact from 'pact-lang-api';
+import cron from 'node-cron';
 
+// Load environment variables
 config();
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -18,40 +21,58 @@ const KEY_PAIR = {
     secretKey: SECRET_KEY,
 };
 
+const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: false });
+
 const creationTime = () => Math.round(new Date().getTime() / 1000);
 
-export async function fetchBroPrice() {
+async function getTokenDetails() {
+    const cmd = {
+        networkId: NETWORK_ID,
+        keyPairs: [KEY_PAIR],
+        pactCode: `(let ((acct (${BRO_TREASURY}.dex-account)))
+                 (round (/ (coin.get-balance acct)
+                           (${BRO}.get-balance acct))
+                        2))`,
+        envData: {},
+        meta: {
+            creationTime: creationTime(),
+            ttl: 600,
+            gasLimit: 150000,
+            chainId: '18',
+            gasPrice: 0.0000001,
+            sender: KEY_PAIR.publicKey,
+        },
+    };
+
     try {
-        console.log('Fetching BRO price...');
-        const cmd = {
-            networkId: NETWORK_ID,
-            keyPairs: [KEY_PAIR],
-            pactCode: `(let ((acct (${BRO_TREASURY}.dex-account)))
-                     (round (/ (coin.get-balance acct)
-                               (${BRO}.get-balance acct))
-                            2))`,
-            envData: {},
-            meta: {
-                creationTime: creationTime(),
-                ttl: 600,
-                gasLimit: 150000,
-                chainId: '18',
-                gasPrice: 0.0000001,
-                sender: KEY_PAIR.publicKey,
-            },
-        };
         const result = await Pact.fetch.local(cmd, API_HOST);
-        const broPrice = result.result.data;
-        console.log('BRO price fetched successfully.');
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message: `BRO Price: ${broPrice} KDA` }),
-        };
+        const broPrice = result.result?.data;
+        if (broPrice > 1800 || broPrice < 1700) {
+            await bot.sendMessage(TELEGRAM_GROUP_ID, `Bro Price: ${broPrice} KDA`);
+        }
+        console.log('Token Details:', result);
     } catch (error) {
         console.error('Error fetching token details:', error);
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ error: 'Failed to fetch BRO price' }),
-        };
     }
 }
+
+// // Schedule the task to run every 1 minutes
+// cron.schedule('*/1 * * * *', async () => {
+//     try {
+//         console.log('Fetching bro price...');
+//         await getTokenDetails();
+//         console.log('BRO price fetched successfully.');
+//     } catch (error) {
+//         console.error('Error running task:', error);
+//     }
+// });
+
+setInterval( async () => {
+    try {
+        console.log('Fetching bro price...');
+        await getTokenDetails();
+        console.log('BRO price fetched successfully.');
+    } catch (error) {
+        console.error('Error running task:', error);
+    }
+} , 20000)
