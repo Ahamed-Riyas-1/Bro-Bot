@@ -1,7 +1,7 @@
 [build]
-command="npm run build"
+functions = "netlify/functions"
 
 [[redirects]]
-from = "/*"
-to = "/index.html"
+from = "/bro-price"
+to = "/.netlify/functions/bro-price"
 status = 200
