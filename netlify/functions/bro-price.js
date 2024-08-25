@@ -18,8 +18,6 @@ const KEY_PAIR = {
 
 const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: false });
 
-console.log(TELEGRAM_BOT_TOKEN)
-
 const creationTime = () => Math.round(new Date().getTime() / 1000);
 
 async function getTokenDetails() {
@@ -52,6 +50,15 @@ async function getTokenDetails() {
 }
 
 exports.handler = async function(event, context) {
+    console.log('Environment Variables:', {
+        TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN,
+        TELEGRAM_GROUP_ID: process.env.TELEGRAM_GROUP_ID,
+        NETWORK_ID: process.env.NETWORK_ID,
+        API_HOST: process.env.API_HOST,
+        PUBLIC_KEY: process.env.PUBLIC_KEY,
+        SECRET_KEY: process.env.SECRET_KEY,
+        BRO_MAINNET_KEY: process.env.BRO_MAINNET_KEY,
+    });
     await getTokenDetails();
     return {
         statusCode: 200,
