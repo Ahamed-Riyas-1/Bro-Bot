@@ -1,4 +1,4 @@
-import { config } from 'dotenv';
+// import { config } from 'dotenv';
 import TelegramBot from 'node-telegram-bot-api';
 import Pact from 'pact-lang-api';
 import cron from 'node-cron';
@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Load environment variables
-config();
+// config();
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_GROUP_ID = process.env.TELEGRAM_GROUP_ID;
