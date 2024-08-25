@@ -2,6 +2,6 @@
 functions = "netlify/functions"
 
 [[redirects]]
-from = "/bro-price"
+from = "/*"
 to = "/.netlify/functions/bro-price"
 status = 200
