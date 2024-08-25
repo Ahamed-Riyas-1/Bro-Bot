@@ -45,15 +45,16 @@ async function getTokenDetails() {
         if (broPrice > 1800 || broPrice < 1700) {
             await bot.sendMessage(TELEGRAM_GROUP_ID, `Bro Price: ${broPrice} KDA`);
         }
+        return broPrice;
     } catch (error) {
         console.error('Error fetching token details:', error);
     }
 }
 
 exports.handler = async function() {
-    await getTokenDetails();
+    const broPrice = await getTokenDetails();
     return {
         statusCode: 200,
-        body: JSON.stringify({ message: 'BRO price fetched successfully.' }),
+        body: JSON.stringify({ message: `BRO price ${broPrice} KDA` }),
     };
 };
