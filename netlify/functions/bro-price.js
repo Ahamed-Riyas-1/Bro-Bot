@@ -13,7 +13,7 @@ const BRO = `${BRO_MAINNET_KEY}.bro`;
 const BRO_TREASURY = `${BRO_MAINNET_KEY}.bro-treasury`;
 const MONGODB_URI = process.env.MONGODB_URI;
 const DB_NAME = process.env.DB_NAME;
-const COLLECTION_NAME = 'bro_prices';
+const COLLECTION_NAME = process.env.COLLECTION_NAME;
 
 const KEY_PAIR = {
     publicKey: PUBLIC_KEY,
