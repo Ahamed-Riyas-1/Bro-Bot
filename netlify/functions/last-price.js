@@ -1,1 +1,1 @@
-export const LAST_PRICE = 0;
+const LAST_PRICE = 0;
