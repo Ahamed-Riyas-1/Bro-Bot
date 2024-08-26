@@ -43,7 +43,7 @@ async function getTokenDetails() {
     try {
         const result = await Pact.fetch.local(cmd, API_HOST);
         const broPrice = result.result?.data;
-        if (broPrice > 1800 || broPrice < 1700) {
+        if ((LAST_PRICE !== broPrice) && broPrice > 1800 || broPrice < 1700) {
             await bot.sendMessage(TELEGRAM_GROUP_ID, `Bro Price: ${broPrice} KDA`);
             LAST_PRICE = broPrice;
         }
@@ -57,6 +57,6 @@ exports.handler = async function() {
     const broPrice = await getTokenDetails();
     return {
         statusCode: 200,
-        body: JSON.stringify({ message: `BRO price ${LAST_PRICE} KDA` }),
+        body: JSON.stringify({ message: `BRO price ${broPrice} KDA` }),
     };
 };
