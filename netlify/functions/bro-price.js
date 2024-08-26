@@ -1,6 +1,5 @@
 const TelegramBot = require('node-telegram-bot-api');
 const Pact = require('pact-lang-api');
-let {LAST_PRICE} = require("./last-price.js");
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_GROUP_ID = process.env.TELEGRAM_GROUP_ID;
@@ -43,9 +42,8 @@ async function getTokenDetails() {
     try {
         const result = await Pact.fetch.local(cmd, API_HOST);
         const broPrice = result.result?.data;
-        if ((LAST_PRICE !== broPrice) && broPrice > 1800 || broPrice < 1700) {
+        if (broPrice > 1800 || broPrice < 1600) {
             await bot.sendMessage(TELEGRAM_GROUP_ID, `Bro Price: ${broPrice} KDA`);
-            LAST_PRICE = broPrice;
         }
         return broPrice;
     } catch (error) {
@@ -60,3 +58,4 @@ exports.handler = async function() {
         body: JSON.stringify({ message: `BRO price ${broPrice} KDA` }),
     };
 };
+
