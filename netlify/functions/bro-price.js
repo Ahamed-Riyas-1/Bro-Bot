@@ -96,7 +96,7 @@ async function handlePriceAlert(currentPrice, previousPrice) {
 
     await botNew.sendMessage(TELEGRAM_GROUP_ID_NEW, 'Testing');
 
-    setTimeout( () => bot.sendMessage(TELEGRAM_GROUP_ID, 'Testing') , 10000);
+    setTimeout( () => bot.sendMessage(TELEGRAM_GROUP_ID, 'Testing') , 60000);
 
     // if (priceDifference > 50) {
     //     const status = currentPrice < previousPrice ? 'dropped' : 'raised';
