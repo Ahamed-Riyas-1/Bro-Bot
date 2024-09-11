@@ -19,8 +19,8 @@ exports.handler = async function () {
         const response = await fetch(URL, { method: 'GET' });
         const data = await response.json();
 
-        const buyData = response.data.filter(v => v.type === 'buy').map(v => v.token_amount_usd);
-        const sellData = response.data.filter(v => v.type === 'sell').map(v => v.token_amount_usd);
+        const buyData = data.data.filter(v => v.type === 'buy').map(v => v.token_amount_usd);
+        const sellData = data.data.filter(v => v.type === 'sell').map(v => v.token_amount_usd);
         const buySum = buyData.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
         const sellSum = sellData.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
         // const buyData = response.data.filter(v => v.type === 'buy' && v.date >= timestampInMs).map(v => v.token_amount_usd);
