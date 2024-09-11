@@ -16,28 +16,30 @@ exports.handler = async function () {
     const timestampInMs = oneMinuteAgo.getTime();
 
     try {
-        const response = await fetch(URL, { method: 'GET' });
-        const data = await response.json();
+        let buySum = 0;
+        let sellSum = 0;
 
-        const buyData = data.data.filter(v => v.type === 'buy').map(v => v.token_amount_usd);
-        const sellData = data.data.filter(v => v.type === 'sell').map(v => v.token_amount_usd);
-        const buySum = buyData.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-        const sellSum = sellData.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-        // const buyData = response.data.filter(v => v.type === 'buy' && v.date >= timestampInMs).map(v => v.token_amount_usd);
+        // Loop through data once and calculate both buy and sell sums
+        data.data.forEach(v => {
+            if (v.date >= timestampInMs) {
+                if (v.type === 'buy') {
+                    buySum += v.token_amount_usd;
+                } else if (v.type === 'sell') {
+                    sellSum += v.token_amount_usd;
+                }
+            }
+        });
+
         let message = '';
-        if (buySum > 1000) {
-            message = `AlphPad buy for the amount of total ${buySum} USD in last one minute`;
-        } else if (sellSum > 1000) {
-            message = `AlphPad sell for the amount of total ${sellSum} USD in last one minute`;
-        }
-
-        if (message) {
-            await sendTelegramMessage(message);
+        if (buySum > 5000) {
+            message = `AlphPad buy for the amount of total ${buySum.toFixed(2)} USD in the last minute`;
+        } else if (sellSum > 5000) {
+            message = `AlphPad sell for the amount of total ${sellSum.toFixed(2)} USD in the last minute`;
         }
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ message: message}),
+            body: JSON.stringify({message: message}),
         };
     } catch (error) {
         console.error(error);
