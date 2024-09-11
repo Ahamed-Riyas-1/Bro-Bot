@@ -19,12 +19,17 @@ exports.handler = async function () {
         const response = await fetch(URL, { method: 'GET' });
         const data = await response.json();
 
-        const filteredData = data.data.filter(v => v.date >= timestampInMs);
-
+        const buyData = response.data.filter(v => v.type === 'buy').map(v => v.token_amount_usd);
+        const sellData = response.data.filter(v => v.type === 'sell').map(v => v.token_amount_usd);
+        const buySum = buyData.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+        const sellSum = sellData.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+        // const buyData = response.data.filter(v => v.type === 'buy' && v.date >= timestampInMs).map(v => v.token_amount_usd);
         let message = '';
-        filteredData.forEach(v => {
-            message += `Type: ${v.type}  ,  AlphPad Amount: ${v.token_amount}  ,  Value in USD: ${v.token_amount_usd}`;
-        });
+        if (buySum > 1000) {
+            message = `AlphPad buy for the amount of total ${buySum} USD in last one minute`;
+        } else if (sellSum > 1000) {
+            message = `AlphPad sell for the amount of total ${sellSum} USD in last one minute`;
+        }
 
         if (message) {
             await sendTelegramMessage(message);
