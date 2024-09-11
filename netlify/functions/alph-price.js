@@ -12,8 +12,8 @@ async function sendTelegramMessage(message) {
 
 exports.handler = async function () {
     const now = new Date();
-    const twoMinutesAgo = new Date(now.getTime() - 2 * 60 * 1000); // 2 minutes ago
-    const timestampInMs = twoMinutesAgo.getTime();
+    const oneMinuteAgo = new Date(now.getTime() - 60 * 1000); // 1 minutes ago
+    const timestampInMs = oneMinuteAgo.getTime();
 
     try {
         const response = await fetch(URL, { method: 'GET' });
