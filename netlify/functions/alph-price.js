@@ -34,10 +34,8 @@ exports.handler = async function () {
         });
 
         let message = '';
-        if (buySum > 5000) {
-            message = `AlphPad buy for the amount of total ${buySum.toFixed(2)} USD in the last minute`;
-        } else if (sellSum > 5000) {
-            message = `AlphPad sell for the amount of total ${sellSum.toFixed(2)} USD in the last minute`;
+        if (buySum > 5000 || sellSum > 5000) {
+            message = `AlphPad ${buySum > 5000 ? 'buy' : 'sell'} for the amount of total ${buySum.toFixed(2)} USD in the last minute`;
         }
 
         if (message) {
