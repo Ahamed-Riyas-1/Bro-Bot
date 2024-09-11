@@ -2,8 +2,8 @@ const TelegramBot = require('node-telegram-bot-api');
 const Pact = require('pact-lang-api');
 const {MongoClient} = require('mongodb');
 
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const TELEGRAM_GROUP_ID = process.env.TELEGRAM_GROUP_ID;
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_NEW_BOT_TOKEN;
+const TELEGRAM_GROUP_ID = process.env.TELEGRAM_NEW_GROUP_ID;
 const NETWORK_ID = process.env.NETWORK_ID;
 const API_HOST = process.env.API_HOST;
 const PUBLIC_KEY = process.env.PUBLIC_KEY;
