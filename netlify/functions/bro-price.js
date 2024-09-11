@@ -94,19 +94,16 @@ async function handlePriceAlert(currentPrice, previousPrice) {
 
     const priceDifference = Math.abs(previousPrice - currentPrice);
 
-    await botNew.sendMessage(TELEGRAM_GROUP_ID_NEW, 'Testing');
+    if (priceDifference > 50) {
+        const status = currentPrice < previousPrice ? 'dropped' : 'raised';
+        const message = `BRO price ${status} from ${previousPrice} KDA to ${currentPrice} KDA`;
 
-    setTimeout( () => bot.sendMessage(TELEGRAM_GROUP_ID, 'Testing') , 60000);
+        await botNew.sendMessage(TELEGRAM_GROUP_ID_NEW, message);
 
-    // if (priceDifference > 50) {
-    //     const status = currentPrice < previousPrice ? 'dropped' : 'raised';
-    //     await bot.sendMessage(
-    //         TELEGRAM_GROUP_ID,
-    //         `BRO price ${status} from ${previousPrice} KDA to ${currentPrice} KDA`
-    //     );
-    //     // Save the current BRO price to MongoDB
-    //     await saveTokenPrice(currentPrice);
-    // }
+        setTimeout(() => bot.sendMessage(TELEGRAM_GROUP_ID, message), 60000);
+        // Save the current BRO price to MongoDB
+        await saveTokenPrice(currentPrice);
+    }
 }
 
 exports.handler = async function () {
