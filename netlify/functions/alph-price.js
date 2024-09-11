@@ -21,9 +21,9 @@ exports.handler = async function () {
 
         const filteredData = data.data.filter(v => v.date >= timestampInMs);
 
-        let message = 'Testing';
+        let message = '';
         filteredData.forEach(v => {
-            message += `Type: ${v.type} , AlphPad Amount: ${v.token_amount} , Value in USD: ${v.token_amount_usd}`;
+            message += `Type: ${v.type}  ,  AlphPad Amount: ${v.token_amount}  ,  Value in USD: ${v.token_amount_usd}`;
         });
 
         if (message) {
