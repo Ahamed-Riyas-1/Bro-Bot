@@ -16,6 +16,9 @@ exports.handler = async function () {
     const timestampInMs = oneMinuteAgo.getTime();
 
     try {
+        const response = await fetch(URL, { method: 'GET' });
+        const data = await response.json();
+
         let buySum = 0;
         let sellSum = 0;
 
