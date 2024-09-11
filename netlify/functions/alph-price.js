@@ -23,7 +23,7 @@ exports.handler = async function () {
 
         let message = 'Testing';
         filteredData.forEach(v => {
-            message += `<strong>Type: ${v.type}</strong> <br> AlphPad Amount: ${v.token_amount} <br> Value in USD: ${v.token_amount_usd} <br><br>`;
+            message += `Type: ${v.type} , AlphPad Amount: ${v.token_amount} , Value in USD: ${v.token_amount_usd}`;
         });
 
         if (message) {
