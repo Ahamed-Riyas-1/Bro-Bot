@@ -40,6 +40,10 @@ exports.handler = async function () {
             message = `AlphPad sell for the amount of total ${sellSum.toFixed(2)} USD in the last minute`;
         }
 
+        if (message) {
+            await bot.sendMessage(TELEGRAM_GROUP_ID, message);
+        }
+
         return {
             statusCode: 200,
             body: JSON.stringify({message: message}),
