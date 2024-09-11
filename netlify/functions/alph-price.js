@@ -23,7 +23,7 @@ exports.handler = async function () {
         let sellSum = 0;
 
         // Loop through data once and calculate both buy and sell sums
-        data.data.forEach(v => {
+        data.data?.forEach(v => {
             if (v.date >= timestampInMs) {
                 if (v.type === 'buy') {
                     buySum += v.token_amount_usd;
