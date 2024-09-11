@@ -5,3 +5,8 @@ functions = "netlify/functions"
 from = "/bro-price"
 to = "/.netlify/functions/bro-price"
 status = 200
+
+[[redirects]]
+from = "/alph-price"
+to = "/.netlify/functions/alph-price"
+status = 200
