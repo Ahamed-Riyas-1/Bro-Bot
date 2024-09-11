@@ -1,5 +1,4 @@
 const TelegramBot = require("node-telegram-bot-api");
-const fetch = require("node-fetch");
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_NEW_BOT_TOKEN;
 const TELEGRAM_GROUP_ID = process.env.TELEGRAM_NEW_GROUP_ID;
