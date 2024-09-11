@@ -7,7 +7,7 @@ const URL = process.env.ALPH_URL;
 const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: false });
 
 async function sendTelegramMessage(message) {
-    await bot.sendMessage(TELEGRAM_GROUP_ID, message, { parse_mode: 'HTML' });
+    await bot.sendMessage(TELEGRAM_GROUP_ID, message);
 }
 
 exports.handler = async function () {
