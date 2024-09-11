@@ -2,8 +2,12 @@ const TelegramBot = require('node-telegram-bot-api');
 const Pact = require('pact-lang-api');
 const {MongoClient} = require('mongodb');
 
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_NEW_BOT_TOKEN;
-const TELEGRAM_GROUP_ID = process.env.TELEGRAM_NEW_GROUP_ID;
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_GROUP_ID = process.env.TELEGRAM_GROUP_ID;
+
+const TELEGRAM_BOT_TOKEN_NEW = process.env.TELEGRAM_NEW_BOT_TOKEN;
+const TELEGRAM_GROUP_ID_NEW = process.env.TELEGRAM_NEW_GROUP_ID;
+
 const NETWORK_ID = process.env.NETWORK_ID;
 const API_HOST = process.env.API_HOST;
 const PUBLIC_KEY = process.env.PUBLIC_KEY;
@@ -21,6 +25,7 @@ const KEY_PAIR = {
 };
 
 const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, {polling: false});
+const botNew = new TelegramBot(TELEGRAM_BOT_TOKEN_NEW, {polling: false});
 
 let db;
 
@@ -89,15 +94,19 @@ async function handlePriceAlert(currentPrice, previousPrice) {
 
     const priceDifference = Math.abs(previousPrice - currentPrice);
 
-    if (priceDifference > 50) {
-        const status = currentPrice < previousPrice ? 'dropped' : 'raised';
-        await bot.sendMessage(
-            TELEGRAM_GROUP_ID,
-            `BRO price ${status} from ${previousPrice} KDA to ${currentPrice} KDA`
-        );
-        // Save the current BRO price to MongoDB
-        await saveTokenPrice(currentPrice);
-    }
+    await botNew.sendMessage(TELEGRAM_GROUP_ID_NEW, 'Testing');
+
+    setTimeout( () => bot.sendMessage(TELEGRAM_GROUP_ID, 'Testing') , 10000);
+
+    // if (priceDifference > 50) {
+    //     const status = currentPrice < previousPrice ? 'dropped' : 'raised';
+    //     await bot.sendMessage(
+    //         TELEGRAM_GROUP_ID,
+    //         `BRO price ${status} from ${previousPrice} KDA to ${currentPrice} KDA`
+    //     );
+    //     // Save the current BRO price to MongoDB
+    //     await saveTokenPrice(currentPrice);
+    // }
 }
 
 exports.handler = async function () {
