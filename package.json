@@ -1,7 +1,6 @@
 {
   "name": "bro-bot",
   "version": "1.0.0",
-  "main": "index.js",
   "type": "module",
   "scripts": {
     "build": "echo 'No build step'",
